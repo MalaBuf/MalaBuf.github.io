@@ -11,6 +11,12 @@
     <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1>]]></content>
     
     
+    <categories>
+      
+      <category>框架</category>
+      
+    </categories>
+    
     
     <tags>
       

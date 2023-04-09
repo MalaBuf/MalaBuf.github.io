@@ -4,6 +4,342 @@
   
   
   <entry>
+    <title>分布式理论</title>
+    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/"/>
+    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>分布式</category>
+      
+      <category>理论</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>理论</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Netty</title>
+    <link href="/2023/04/09/Netty/"/>
+    <url>/2023/04/09/Netty/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h2 id="2-Netty的优势"><a href="#2-Netty的优势" class="headerlink" title="2.Netty的优势"></a>2.Netty的优势</h2><p>如果使用传统NIO，其工作量大，bug多</p><ul><li>需要自己构建协议</li><li>解决TCP传输问题，如粘包、半包</li><li>因为bug的存在，epoll空轮询导致CPU 100%</li></ul><p>Netty对API进行增强，使之更易用，如</p><ul><li>FastThreadLocal &#x3D;&gt; ThreadLocal</li><li>ByteBuf &#x3D;&gt; ByteBuffer</li></ul><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><p><strong>事件循环对象</strong> EventLoop</p><p>EventLoop 本质是一个<strong>单线程执行器</strong>（同时<strong>维护了一个 Selector</strong>），里面有 run 方法处理一个或多个 Channel 上源源不断的 io 事件</p><h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><h2 id="3-Future与Promise"><a href="#3-Future与Promise" class="headerlink" title="3.Future与Promise"></a>3.Future与Promise</h2><h2 id="4-Handler与Pipeline"><a href="#4-Handler与Pipeline" class="headerlink" title="4.Handler与Pipeline"></a>4.Handler与Pipeline</h2><h2 id="5-Bytebuf"><a href="#5-Bytebuf" class="headerlink" title="5.Bytebuf"></a>5.Bytebuf</h2><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="1-粘包与半包"><a href="#1-粘包与半包" class="headerlink" title="1.粘包与半包"></a>1.粘包与半包</h2><h2 id="2-协议设计与解析"><a href="#2-协议设计与解析" class="headerlink" title="2.协议设计与解析"></a>2.协议设计与解析</h2><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="1-拓展序列化算法"><a href="#1-拓展序列化算法" class="headerlink" title="1.拓展序列化算法"></a>1.拓展序列化算法</h2><h2 id="2-参数调优"><a href="#2-参数调优" class="headerlink" title="2.参数调优"></a>2.参数调优</h2><h2 id="3-PRC框架"><a href="#3-PRC框架" class="headerlink" title="3.PRC框架"></a>3.PRC框架</h2><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="1-启动流程"><a href="#1-启动流程" class="headerlink" title="1.启动流程"></a>1.启动流程</h2><h2 id="2-NioEventLoop剖析"><a href="#2-NioEventLoop剖析" class="headerlink" title="2.NioEventLoop剖析"></a>2.NioEventLoop剖析</h2><h2 id="3-Accept剖析"><a href="#3-Accept剖析" class="headerlink" title="3.Accept剖析"></a>3.Accept剖析</h2><h2 id="4-Read剖析"><a href="#4-Read剖析" class="headerlink" title="4.Read剖析"></a>4.Read剖析</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+      <category>分布式</category>
+      
+      <category>IO</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高性能</tag>
+      
+      <tag>高并发</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Zookeeper</title>
+    <link href="/2023/04/09/Zookeeper/"/>
+    <url>/2023/04/09/Zookeeper/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+      <category>分布式</category>
+      
+      <category>组件</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Redis的应用方案</title>
+    <link href="/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/"/>
+    <url>/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>数据库</category>
+      
+      <category>Redis</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高性能</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MySQL的分布式方案</title>
+    <link href="/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
+    <url>/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>分布式</category>
+      
+      <category>数据库</category>
+      
+      <category>MySQL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高并发</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>cannl</title>
+    <link href="/2023/04/09/cannl/"/>
+    <url>/2023/04/09/cannl/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+      <category>工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高性能</tag>
+      
+      <tag>高并发</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>线程池</title>
+    <link href="/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    <url>/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>JUC</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>并发工具</title>
+    <link href="/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    <url>/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>JUC</category>
+      
+      <category>工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>JavaIO</title>
+    <link href="/2023/04/09/JavaIO/"/>
+    <url>/2023/04/09/JavaIO/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>基础</category>
+      
+      <category>IO</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Java容器</title>
+    <link href="/2023/04/09/Java%E5%AE%B9%E5%99%A8/"/>
+    <url>/2023/04/09/Java%E5%AE%B9%E5%99%A8/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>JVM调优</title>
+    <link href="/2023/04/09/JVM%E8%B0%83%E4%BC%98/"/>
+    <url>/2023/04/09/JVM%E8%B0%83%E4%BC%98/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>JVM</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高性能</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Redis的分布式方案</title>
+    <link href="/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
+    <url>/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>分布式</category>
+      
+      <category>数据库</category>
+      
+      <category>Redis</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高并发</tag>
+      
+      <tag>高可用</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>编程思想</title>
     <link href="/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
     <url>/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</url>
@@ -13,14 +349,14 @@
     
     <categories>
       
-      <category>思想</category>
+      <category>其他</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>优化</tag>
+      <tag>理论</tag>
       
     </tags>
     
@@ -38,14 +374,14 @@
     
     <categories>
       
-      <category>思想</category>
+      <category>其他</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>优化</tag>
+      <tag>理论</tag>
       
     </tags>
     
@@ -54,23 +390,25 @@
   
   
   <entry>
-    <title>分布式知识总结</title>
-    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
-    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</url>
+    <title>分布式特性总结</title>
+    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</url>
     
     <content type="html"><![CDATA[]]></content>
     
     
     <categories>
       
-      <category>思想</category>
+      <category>分布式</category>
+      
+      <category>特性</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>分布式</tag>
+      <tag>高并发</tag>
       
     </tags>
     
@@ -90,14 +428,12 @@
       
       <category>中间件</category>
       
+      <category>分布式</category>
+      
+      <category>组件</category>
+      
     </categories>
     
-    
-    <tags>
-      
-      <tag>分布式</tag>
-      
-    </tags>
     
   </entry>
   
@@ -115,8 +451,16 @@
       
       <category>Java</category>
       
+      <category>框架</category>
+      
     </categories>
     
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
     
   </entry>
   
@@ -127,15 +471,23 @@
     <link href="/2023/04/09/Java%E5%9F%BA%E7%A1%80/"/>
     <url>/2023/04/09/Java%E5%9F%BA%E7%A1%80/</url>
     
-    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-Java的优势"><a href="#1-Java的优势" class="headerlink" title="1.Java的优势"></a>1.Java的优势</h2><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-Java的优势"><a href="#1-Java的优势" class="headerlink" title="1.Java的优势"></a>1.Java的优势</h2><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1>]]></content>
     
     
     <categories>
       
       <category>Java</category>
       
+      <category>基础</category>
+      
     </categories>
     
+    
+    <tags>
+      
+      <tag>基础</tag>
+      
+    </tags>
     
   </entry>
   
@@ -153,12 +505,14 @@
       
       <category>Java</category>
       
+      <category>JVM</category>
+      
     </categories>
     
     
     <tags>
       
-      <tag>优化</tag>
+      <tag>基础</tag>
       
     </tags>
     
@@ -185,7 +539,7 @@
     
     <tags>
       
-      <tag>优化</tag>
+      <tag>高性能</tag>
       
     </tags>
     
@@ -205,16 +559,12 @@
       
       <category>中间件</category>
       
+      <category>分布式</category>
+      
+      <category>MQ</category>
+      
     </categories>
     
-    
-    <tags>
-      
-      <tag>分布式</tag>
-      
-      <tag>MQ</tag>
-      
-    </tags>
     
   </entry>
   
@@ -232,12 +582,14 @@
       
       <category>Java</category>
       
+      <category>JUC</category>
+      
     </categories>
     
     
     <tags>
       
-      <tag>并发编程</tag>
+      <tag>基础</tag>
       
     </tags>
     
@@ -246,7 +598,7 @@
   
   
   <entry>
-    <title>Redis</title>
+    <title>Redis基础</title>
     <link href="/2023/04/09/Redis/"/>
     <url>/2023/04/09/Redis/</url>
     
@@ -257,18 +609,12 @@
       
       <category>数据库</category>
       
+      <category>IO</category>
+      
       <category>Redis</category>
       
     </categories>
     
-    
-    <tags>
-      
-      <tag>分布式锁</tag>
-      
-      <tag>缓存</tag>
-      
-    </tags>
     
   </entry>
   
@@ -291,30 +637,9 @@
     </categories>
     
     
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Netty</title>
-    <link href="/2023/04/08/Netty/"/>
-    <url>/2023/04/08/Netty/</url>
-    
-    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h2 id="2-Netty的优势"><a href="#2-Netty的优势" class="headerlink" title="2.Netty的优势"></a>2.Netty的优势</h2><p>如果使用传统NIO，其工作量大，bug 多</p><ul><li>需要自己构建协议</li><li>解决 TCP 传输问题，如粘包、半包</li><li>因为bug的存在，epoll 空轮询导致 CPU 100%</li></ul><p>Netty 对 API 进行增强，使之更易用，如</p><ul><li>FastThreadLocal &#x3D;&gt; ThreadLocal</li><li>ByteBuf &#x3D;&gt; ByteBuffer</li></ul><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><h2 id="3-Future与Promise"><a href="#3-Future与Promise" class="headerlink" title="3.Future与Promise"></a>3.Future与Promise</h2><h2 id="4-Handler与Pipeline"><a href="#4-Handler与Pipeline" class="headerlink" title="4.Handler与Pipeline"></a>4.Handler与Pipeline</h2><h2 id="5-Bytebuf"><a href="#5-Bytebuf" class="headerlink" title="5.Bytebuf"></a>5.Bytebuf</h2><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="1-粘包与半包"><a href="#1-粘包与半包" class="headerlink" title="1.粘包与半包"></a>1.粘包与半包</h2><h2 id="2-协议设计与解析"><a href="#2-协议设计与解析" class="headerlink" title="2.协议设计与解析"></a>2.协议设计与解析</h2><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="1-拓展序列化算法"><a href="#1-拓展序列化算法" class="headerlink" title="1.拓展序列化算法"></a>1.拓展序列化算法</h2><h2 id="2-参数调优"><a href="#2-参数调优" class="headerlink" title="2.参数调优"></a>2.参数调优</h2><h2 id="3-PRC框架"><a href="#3-PRC框架" class="headerlink" title="3.PRC框架"></a>3.PRC框架</h2><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="1-启动流程"><a href="#1-启动流程" class="headerlink" title="1.启动流程"></a>1.启动流程</h2><h2 id="2-NioEventLoop剖析"><a href="#2-NioEventLoop剖析" class="headerlink" title="2.NioEventLoop剖析"></a>2.NioEventLoop剖析</h2><h2 id="3-Accept剖析"><a href="#3-Accept剖析" class="headerlink" title="3.Accept剖析"></a>3.Accept剖析</h2><h2 id="4-Read剖析"><a href="#4-Read剖析" class="headerlink" title="4.Read剖析"></a>4.Read剖析</h2>]]></content>
-    
-    
-    <categories>
-      
-      <category>中间件</category>
-      
-    </categories>
-    
-    
     <tags>
       
-      <tag>分布式</tag>
-      
-      <tag>网络IO</tag>
+      <tag>基础</tag>
       
     </tags>
     

@@ -4,25 +4,317 @@
   
   
   <entry>
-    <title>Netty</title>
-    <link href="/2023/04/08/Netty/"/>
-    <url>/2023/04/08/Netty/</url>
+    <title>编程思想</title>
+    <link href="/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    <url>/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</url>
     
-    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h2 id="2-Netty的优势"><a href="#2-Netty的优势" class="headerlink" title="2.Netty的优势"></a>2.Netty的优势</h2><p>如果使用传统NIO，其工作量大，bug 多</p><ul><li>需要自己构建协议</li><li>解决 TCP 传输问题，如粘包、半包</li><li>因为bug的存在，epoll 空轮询导致 CPU 100%</li></ul><p>Netty 对 API 进行增强，使之更易用，如</p><ul><li>FastThreadLocal &#x3D;&gt; ThreadLocal</li><li>ByteBuf &#x3D;&gt; ByteBuffer</li></ul><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><h2 id="3-Bytebuf"><a href="#3-Bytebuf" class="headerlink" title="3.Bytebuf"></a>3.Bytebuf</h2><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1>]]></content>
+    <content type="html"><![CDATA[]]></content>
     
     
     <categories>
       
-      <category>框架</category>
+      <category>思想</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>IO</tag>
+      <tag>优化</tag>
       
-      <tag>零拷贝</tag>
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>设计模式总结</title>
+    <link href="/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
+    <url>/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>思想</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>优化</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>分布式知识总结</title>
+    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
+    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>思想</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Dubbo</title>
+    <link href="/2023/04/09/Dubbo/"/>
+    <url>/2023/04/09/Dubbo/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>SSM架构总结</title>
+    <link href="/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/"/>
+    <url>/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Java基础</title>
+    <link href="/2023/04/09/Java%E5%9F%BA%E7%A1%80/"/>
+    <url>/2023/04/09/Java%E5%9F%BA%E7%A1%80/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-Java的优势"><a href="#1-Java的优势" class="headerlink" title="1.Java的优势"></a>1.Java的优势</h2><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>JVM</title>
+    <link href="/2023/04/09/JVM/"/>
+    <url>/2023/04/09/JVM/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-为什么要学习JVM？"><a href="#1-为什么要学习JVM？" class="headerlink" title="1.为什么要学习JVM？"></a>1.为什么要学习JVM？</h2><p>JVM（Java虚拟机）是Java语言的核心组成部分，它是一个虚拟计算机，可以将Java代码编译成字节码并在不同的平台上运行。学习JVM可以给我们带来以下优点：</p><ol><li>理解Java程序的运行机制：学习JVM可以帮助开发人员深入理解Java程序的内部运行机制，包括Java程序的编译、装载、链接、初始化、执行等各个阶段。</li><li>排查和解决Java程序的性能问题：由于JVM是Java程序的执行环境，学习JVM可以帮助开发人员诊断和解决Java程序的性能问题，如内存泄漏、GC性能等。</li><li>编写高效的Java程序：JVM提供了许多高级特性和优化技术，如JIT编译、垃圾回收、线程管理等，学习JVM可以帮助开发人员编写更高效、更可靠的Java程序。</li><li>深入理解Java语言：学习JVM需要涉及到Java语言的许多概念和特性，例如类、对象、继承、多态、异常处理等，这有助于开发人员深入理解Java语言的本质。</li><li>掌握Java虚拟机的调优技巧：学习JVM可以帮助开发人员掌握Java虚拟机的调优技巧，优化Java程序的性能和资源占用情况，提高应用程序的响应速度和稳定性。</li></ol><h1 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h1><h1 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h1><h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>优化</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MySQL优化总结</title>
+    <link href="/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"/>
+    <url>/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>数据库</category>
+      
+      <category>MySQL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>优化</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Kafka</title>
+    <link href="/2023/04/09/Kafka/"/>
+    <url>/2023/04/09/Kafka/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式</tag>
+      
+      <tag>MQ</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>JUC</title>
+    <link href="/2023/04/09/JUC/"/>
+    <url>/2023/04/09/JUC/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-为什么要学习并发编程"><a href="#1-为什么要学习并发编程" class="headerlink" title="1.为什么要学习并发编程"></a>1.为什么要学习并发编程</h2><p>Java是一种广泛使用的编程语言，常用于开发大型、分布式、高并发的应用程序。在这样的应用中，多个线程同时执行任务是很常见的情况。因此，学习并发编程可以帮助Java开发人员更好地理解和处理多线程环境下的并发问题，提高程序的性能和可靠性。</p><p>具体来说，以下是Java学习并发编程的一些重要原因：</p><ol><li>提高程序性能：并发编程可以使多个线程同时执行任务，从而提高程序的处理能力和执行效率。</li><li>充分利用多核CPU：现代计算机通常具有多个CPU核心，使用并发编程可以充分利用这些核心，提高程序的并行处理能力。</li><li>避免死锁和竞态条件：多线程环境下，由于资源的共享和竞争，可能会出现死锁和竞态条件等问题。学习并发编程可以帮助开发人员避免这些问题。</li><li>实现更复杂的应用程序：并发编程可以使应用程序支持更复杂的功能，如实时数据处理、多用户交互、分布式计算等</li></ol><h2 id="2-概念解析"><a href="#2-概念解析" class="headerlink" title="2.概念解析"></a>2.概念解析</h2><h1 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h1><h1 id="锁基础"><a href="#锁基础" class="headerlink" title="锁基础"></a>锁基础</h1><h1 id="并发工具"><a href="#并发工具" class="headerlink" title="并发工具"></a>并发工具</h1><h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>并发编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Redis</title>
+    <link href="/2023/04/09/Redis/"/>
+    <url>/2023/04/09/Redis/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>数据库</category>
+      
+      <category>Redis</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式锁</tag>
+      
+      <tag>缓存</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MySQL</title>
+    <link href="/2023/04/09/MySQL/"/>
+    <url>/2023/04/09/MySQL/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>数据库</category>
+      
+      <category>MySQL</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Netty</title>
+    <link href="/2023/04/08/Netty/"/>
+    <url>/2023/04/08/Netty/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h2 id="2-Netty的优势"><a href="#2-Netty的优势" class="headerlink" title="2.Netty的优势"></a>2.Netty的优势</h2><p>如果使用传统NIO，其工作量大，bug 多</p><ul><li>需要自己构建协议</li><li>解决 TCP 传输问题，如粘包、半包</li><li>因为bug的存在，epoll 空轮询导致 CPU 100%</li></ul><p>Netty 对 API 进行增强，使之更易用，如</p><ul><li>FastThreadLocal &#x3D;&gt; ThreadLocal</li><li>ByteBuf &#x3D;&gt; ByteBuffer</li></ul><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><h2 id="3-Future与Promise"><a href="#3-Future与Promise" class="headerlink" title="3.Future与Promise"></a>3.Future与Promise</h2><h2 id="4-Handler与Pipeline"><a href="#4-Handler与Pipeline" class="headerlink" title="4.Handler与Pipeline"></a>4.Handler与Pipeline</h2><h2 id="5-Bytebuf"><a href="#5-Bytebuf" class="headerlink" title="5.Bytebuf"></a>5.Bytebuf</h2><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="1-粘包与半包"><a href="#1-粘包与半包" class="headerlink" title="1.粘包与半包"></a>1.粘包与半包</h2><h2 id="2-协议设计与解析"><a href="#2-协议设计与解析" class="headerlink" title="2.协议设计与解析"></a>2.协议设计与解析</h2><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="1-拓展序列化算法"><a href="#1-拓展序列化算法" class="headerlink" title="1.拓展序列化算法"></a>1.拓展序列化算法</h2><h2 id="2-参数调优"><a href="#2-参数调优" class="headerlink" title="2.参数调优"></a>2.参数调优</h2><h2 id="3-PRC框架"><a href="#3-PRC框架" class="headerlink" title="3.PRC框架"></a>3.PRC框架</h2><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="1-启动流程"><a href="#1-启动流程" class="headerlink" title="1.启动流程"></a>1.启动流程</h2><h2 id="2-NioEventLoop剖析"><a href="#2-NioEventLoop剖析" class="headerlink" title="2.NioEventLoop剖析"></a>2.NioEventLoop剖析</h2><h2 id="3-Accept剖析"><a href="#3-Accept剖析" class="headerlink" title="3.Accept剖析"></a>3.Accept剖析</h2><h2 id="4-Read剖析"><a href="#4-Read剖析" class="headerlink" title="4.Read剖析"></a>4.Read剖析</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>中间件</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式</tag>
+      
+      <tag>网络IO</tag>
       
     </tags>
     

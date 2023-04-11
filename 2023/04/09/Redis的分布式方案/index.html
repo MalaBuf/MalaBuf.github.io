@@ -19,18 +19,18 @@
     <meta name="description" content="Notes for Coder">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的分布式方案">
-<meta property="og:url" content="https://gitee.com/MalaBuf/youzi/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:url" content="https://malabuf.gitee.io/youzi/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="Youzi">
 <meta property="og:description" content="Notes for Coder">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/youzi/img/redis.jpg">
+<meta property="og:image" content="https://malabuf.gitee.io/youzi/img/redis.jpg">
 <meta property="article:published_time" content="2023-04-09T12:49:32.000Z">
 <meta property="article:modified_time" content="2023-04-09T14:45:14.531Z">
 <meta property="article:author" content="Noah Lee">
 <meta property="article:tag" content="高并发">
 <meta property="article:tag" content="高可用">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/youzi/img/redis.jpg">
+<meta name="twitter:image" content="https://malabuf.gitee.io/youzi/img/redis.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -74,7 +74,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"gitee.com","root":"/youzi/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/youzi/local-search.xml"};
+    var CONFIG = {"hostname":"malabuf.gitee.io","root":"/youzi/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/youzi/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -348,7 +348,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis的分布式方案</div>
-      <div>https://gitee.com/MalaBuf/youzi/2023/04/09/Redis的分布式方案/</div>
+      <div>https://malabuf.gitee.io/youzi/2023/04/09/Redis的分布式方案/</div>
     </div>
     <div class="license-meta">
       

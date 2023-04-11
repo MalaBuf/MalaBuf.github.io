@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/dinosaur.png">
-  <link rel="icon" href="/img/dinosaur.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/youzi/img/dinosaur.png">
+  <link rel="icon" href="/youzi/img/dinosaur.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,17 +19,17 @@
     <meta name="description" content="Notes for Coder">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaIO">
-<meta property="og:url" content="https://malabuf.gitee.io/2023/04/09/JavaIO/index.html">
+<meta property="og:url" content="https://malabuf.gitee.io/youzi/2023/04/09/JavaIO/index.html">
 <meta property="og:site_name" content="Youzi">
 <meta property="og:description" content="Notes for Coder">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://malabuf.gitee.io/img/java.png">
+<meta property="og:image" content="https://malabuf.gitee.io/youzi/img/java.png">
 <meta property="article:published_time" content="2023-04-09T13:21:02.000Z">
 <meta property="article:modified_time" content="2023-04-09T14:47:05.252Z">
 <meta property="article:author" content="Noah Lee">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://malabuf.gitee.io/img/java.png">
+<meta name="twitter:image" content="https://malabuf.gitee.io/youzi/img/java.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -59,12 +59,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/youzi/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/youzi/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/youzi/css/highlight-dark.css" />
   
 
 
@@ -73,15 +73,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"malabuf.gitee.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"malabuf.gitee.io","root":"/youzi/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/youzi/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/youzi/js/utils.js" ></script>
+  <script  src="/youzi/js/color-schema.js" ></script>
   
 
 
@@ -98,7 +98,7 @@
 <div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/youzi/">
       <strong>Youzi</strong>
     </a>
 
@@ -117,7 +117,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/youzi/">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -129,7 +129,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/youzi/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -141,7 +141,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/youzi/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -153,7 +153,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/youzi/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -165,7 +165,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/youzi/about/">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -195,7 +195,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/bk02.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/youzi/img/bk02.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -300,12 +300,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/youzi/categories/Java/" class="category-chain-item">Java</a>
   
   
     <span>></span>
     
-  <a href="/categories/Java/%E5%9F%BA%E7%A1%80/" class="category-chain-item">基础</a>
+  <a href="/youzi/categories/Java/%E5%9F%BA%E7%A1%80/" class="category-chain-item">基础</a>
   
   
 
@@ -317,7 +317,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/IO/" class="category-chain-item">IO</a>
+  <a href="/youzi/categories/IO/" class="category-chain-item">IO</a>
   
   
 
@@ -332,7 +332,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%9F%BA%E7%A1%80/">#基础</a>
+        <a href="/youzi/tags/%E5%9F%BA%E7%A1%80/">#基础</a>
       
     </div>
   
@@ -345,7 +345,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>JavaIO</div>
-      <div>https://malabuf.gitee.io/2023/04/09/JavaIO/</div>
+      <div>https://malabuf.gitee.io/youzi/2023/04/09/JavaIO/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +389,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/" title="并发工具">
+                      <a href="/youzi/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/" title="并发工具">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">并发工具</span>
                         <span class="visible-mobile">上一篇</span>
@@ -399,7 +399,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/09/Java%E5%AE%B9%E5%99%A8/" title="Java容器">
+                      <a href="/youzi/2023/04/09/Java%E5%AE%B9%E5%99%A8/" title="Java容器">
                         <span class="hidden-mobile">Java容器</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -553,8 +553,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/youzi/js/events.js" ></script>
+<script  src="/youzi/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -576,7 +576,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/youzi/js/img-lazyload.js" ></script>
   
 
 
@@ -675,7 +675,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/youzi/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -685,7 +685,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/youzi/js/boot.js" ></script>
 
 
   

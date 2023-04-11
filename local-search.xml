@@ -5,8 +5,8 @@
   
   <entry>
     <title>分布式理论</title>
-    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/"/>
-    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/</url>
+    <link href="/youzi/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/"/>
+    <url>/youzi/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -32,8 +32,8 @@
   
   <entry>
     <title>Netty</title>
-    <link href="/2023/04/09/Netty/"/>
-    <url>/2023/04/09/Netty/</url>
+    <link href="/youzi/2023/04/09/Netty/"/>
+    <url>/youzi/2023/04/09/Netty/</url>
     
     <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.什么是Netty"></a>1.什么是Netty</h2><p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p><p><strong>注意</strong>：<code>netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO</code></p><h2 id="2-Netty的优势"><a href="#2-Netty的优势" class="headerlink" title="2.Netty的优势"></a>2.Netty的优势</h2><p>如果使用传统NIO，其工作量大，bug多</p><ul><li>需要自己构建协议</li><li>解决TCP传输问题，如粘包、半包</li><li>因为bug的存在，epoll空轮询导致CPU 100%</li></ul><p>Netty对API进行增强，使之更易用，如</p><ul><li>FastThreadLocal &#x3D;&gt; ThreadLocal</li><li>ByteBuf &#x3D;&gt; ByteBuffer</li></ul><h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><p><strong>事件循环对象</strong> EventLoop</p><p>EventLoop 本质是一个<strong>单线程执行器</strong>（同时<strong>维护了一个 Selector</strong>），里面有 run 方法处理一个或多个 Channel 上源源不断的 io 事件</p><p>它的继承关系如下</p><ul><li>继承自 j.u.c.ScheduledExecutorService 因此包含了线程池中所有的方法</li><li>继承自 netty 自己的 OrderedEventExecutor<ul><li>提供了 boolean inEventLoop(Thread thread) 方法判断一个线程是否属于此 EventLoop</li><li>提供了 EventLoopGroup parent() 方法来看看自己属于哪个 EventLoopGroup</li></ul></li></ul><p><strong>事件循环组</strong> EventLoopGroup</p><p>EventLoopGroup 是一组 EventLoop，Channel 一般会调用 EventLoopGroup 的 register 方法来绑定其中一个 EventLoop，后续这个 Channel 上的 io 事件都由此 EventLoop 来处理（保证了 io 事件处理时的线程安全）</p><ul><li>继承自 netty 自己的 EventExecutorGroup<ul><li>实现了 Iterable 接口提供遍历 EventLoop 的能力</li><li>另有 next 方法获取集合中下一个 EventLoop</li></ul></li></ul><h3 id="处理普通与定时任务"><a href="#处理普通与定时任务" class="headerlink" title="处理普通与定时任务"></a>处理普通与定时任务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestEventLoop</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 创建拥有两个EventLoop的NioEventLoopGroup，对应两个线程</span><br>        <span class="hljs-type">EventLoopGroup</span> <span class="hljs-variable">group</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">2</span>);<br>        <span class="hljs-comment">// 通过next方法可以获得下一个 EventLoop</span><br>        System.out.println(group.next());<br>        System.out.println(group.next());<br><br>        <span class="hljs-comment">// 通过EventLoop执行普通任务</span><br>        group.next().execute(()-&gt;&#123;<br>            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; hello&quot;</span>);<br>        &#125;);<br><br>        <span class="hljs-comment">// 通过EventLoop执行定时任务</span><br>        group.next().scheduleAtFixedRate(()-&gt;&#123;<br>            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; hello2&quot;</span>);<br>        &#125;, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, TimeUnit.SECONDS);<br>        <br>        <span class="hljs-comment">// 优雅地关闭</span><br>        group.shutdownGracefully();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>输出结果如下</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">io</span>.netty.channel.nio.NioEventLoop@<span class="hljs-number">7</span>bb11784<br><span class="hljs-attribute">io</span>.netty.channel.nio.NioEventLoop@<span class="hljs-number">33</span>a10788<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">1</span> hello<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">2</span> hello2<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">2</span> hello2<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">2</span> hello2<br></code></pre></td></tr></table></figure><p><strong>关闭 EventLoopGroup</strong></p><p>优雅关闭 <code>shutdownGracefully</code> 方法。该方法会首先切换 <code>EventLoopGroup</code> 到关闭状态从而拒绝新的任务的加入，然后在任务队列的任务都处理完成后，停止线程的运行。从而确保整体应用是在正常有序的状态下退出的</p><h3 id="处理IO任务"><a href="#处理IO任务" class="headerlink" title="处理IO任务"></a>处理IO任务</h3><h4 id="服务器代码"><a href="#服务器代码" class="headerlink" title="服务器代码"></a>服务器代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerBootstrap</span>()<br>                .group(<span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>())<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInitializer</span>&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initChannel</span><span class="hljs-params">(SocketChannel socketChannel)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                        socketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInboundHandlerAdapter</span>() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                                <span class="hljs-type">ByteBuf</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> (ByteBuf) msg;<br>                                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; &quot;</span> + buf.toString(StandardCharsets.UTF_8));<br><br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;)<br>                .bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h4 id="客户端代码"><a href="#客户端代码" class="headerlink" title="客户端代码"></a>客户端代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClient</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException &#123;<br>        <span class="hljs-type">Channel</span> <span class="hljs-variable">channel</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Bootstrap</span>()<br>                .group(<span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>())<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInitializer</span>&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initChannel</span><span class="hljs-params">(SocketChannel socketChannel)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                        socketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> <span class="hljs-title class_">StringEncoder</span>());<br>                    &#125;<br>                &#125;)<br>                .connect(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InetSocketAddress</span>(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>))<br>                .sync()<br>                .channel();<br>        System.out.println(channel);<br>        <span class="hljs-comment">// 此处打断点调试，调用 channel.writeAndFlush(...);</span><br>        System.in.read();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h3 id="分工"><a href="#分工" class="headerlink" title="分工"></a>分工</h3><p>Bootstrap的group()方法<strong>可以传入两个EventLoopGroup参数</strong>，分别负责处理不同的事件</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerBootstrap</span>()<br>            <span class="hljs-comment">// 两个Group，分别为Boss 负责Accept事件，Worker 负责读写事件</span><br>                .group(<span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">2</span>))<br>            <br>...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>多个客户端分别发送 <code>hello</code> 结果</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">3</span>-<span class="hljs-number">1</span> hello1<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">3</span>-<span class="hljs-number">2</span> hello2<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">3</span>-<span class="hljs-number">1</span> hello3<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">3</span>-<span class="hljs-number">2</span> hello4<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">3</span>-<span class="hljs-number">2</span> hello4<br></code></pre></td></tr></table></figure><p>可以看出，一个EventLoop可以<strong>负责多个</strong>Channel，且EventLoop一旦与Channel绑定，则<strong>一直负责</strong>处理该Channel中的事件</p><p><img src="https://s2.loli.net/2023/04/11/phKN5T6gU2zOvEq.png"></p><h4 id="增加自定义EventLoopGroup"><a href="#增加自定义EventLoopGroup" class="headerlink" title="增加自定义EventLoopGroup"></a>增加自定义EventLoopGroup</h4><p>当有的<strong>任务需要较长的时间处理时，可以使用非NioEventLoopGroup</strong>，避免同一个NioEventLoop中的其他Channel在较长的时间内都无法得到处理</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 增加自定义的非NioEventLoopGroup</span><br>        <span class="hljs-type">EventLoopGroup</span> <span class="hljs-variable">group</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultEventLoopGroup</span>();<br>        <br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerBootstrap</span>()<br>                .group(<span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">NioEventLoopGroup</span>(<span class="hljs-number">2</span>))<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInitializer</span>&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initChannel</span><span class="hljs-params">(SocketChannel socketChannel)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                        <span class="hljs-comment">// 增加两个handler，第一个使用NioEventLoopGroup处理，第二个使用自定义EventLoopGroup处理</span><br>                        socketChannel.pipeline().addLast(<span class="hljs-string">&quot;nioHandler&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInboundHandlerAdapter</span>() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                                <span class="hljs-type">ByteBuf</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> (ByteBuf) msg;<br>                                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; &quot;</span> + buf.toString(StandardCharsets.UTF_8));<br>                                <span class="hljs-comment">// 调用下一个handler</span><br>                                ctx.fireChannelRead(msg);<br>                            &#125;<br>                        &#125;)<br>                        <span class="hljs-comment">// 该handler绑定自定义的Group</span><br>                        .addLast(group, <span class="hljs-string">&quot;myHandler&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChannelInboundHandlerAdapter</span>() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                                <span class="hljs-type">ByteBuf</span> <span class="hljs-variable">buf</span> <span class="hljs-operator">=</span> (ByteBuf) msg;<br>                                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; &quot;</span> + buf.toString(StandardCharsets.UTF_8));<br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;)<br>                .bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>启动四个客户端发送数据</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">4</span>-<span class="hljs-number">1</span> hello1<br><span class="hljs-attribute">defaultEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">1</span> hello1<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">4</span>-<span class="hljs-number">2</span> hello2<br><span class="hljs-attribute">defaultEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">2</span> hello2<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">4</span>-<span class="hljs-number">1</span> hello3<br><span class="hljs-attribute">defaultEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">3</span> hello3<br><span class="hljs-attribute">nioEventLoopGroup</span>-<span class="hljs-number">4</span>-<span class="hljs-number">2</span> hello4<br><span class="hljs-attribute">defaultEventLoopGroup</span>-<span class="hljs-number">2</span>-<span class="hljs-number">4</span> hello4<br></code></pre></td></tr></table></figure><p>可以看出，客户端与服务器之间的事件，被nioEventLoopGroup和defaultEventLoopGroup分别处理</p><p><img src="https://s2.loli.net/2023/04/11/B6olPkqQnUKjmbd.png"></p><h4 id="切换的实现"><a href="#切换的实现" class="headerlink" title="切换的实现"></a>切换的实现</h4><p><strong>不同的EventLoopGroup切换的实现原理如下</strong></p><p>由上面的图可以看出，当handler中绑定的Group不同时，需要切换Group来执行不同的任务</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invokeChannelRead</span><span class="hljs-params">(<span class="hljs-keyword">final</span> AbstractChannelHandlerContext next, Object msg)</span> &#123;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">Object</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> next.pipeline.touch(ObjectUtil.checkNotNull(msg, <span class="hljs-string">&quot;msg&quot;</span>), next);<br>    <span class="hljs-comment">// 获得下一个EventLoop, excutor 即为 EventLoopGroup</span><br>    <span class="hljs-type">EventExecutor</span> <span class="hljs-variable">executor</span> <span class="hljs-operator">=</span> next.executor();<br>    <br>    <span class="hljs-comment">// 如果下一个EventLoop 在当前的 EventLoopGroup中</span><br>    <span class="hljs-keyword">if</span> (executor.inEventLoop()) &#123;<br>        <span class="hljs-comment">// 使用当前 EventLoopGroup 中的 EventLoop 来处理任务</span><br>        next.invokeChannelRead(m);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 否则让另一个 EventLoopGroup 中的 EventLoop 来创建任务并执行</span><br>        executor.execute(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                next.invokeChannelRead(m);<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><ul><li>如果两个 handler 绑定的是<strong>同一个EventLoopGroup</strong>，那么就直接调用</li><li>否则，把要调用的代码封装为一个任务对象，由下一个 handler 的 EventLoopGroup 来调用</li></ul><h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><h2 id="3-Future与Promise"><a href="#3-Future与Promise" class="headerlink" title="3.Future与Promise"></a>3.Future与Promise</h2><h2 id="4-Handler与Pipeline"><a href="#4-Handler与Pipeline" class="headerlink" title="4.Handler与Pipeline"></a>4.Handler与Pipeline</h2><h2 id="5-Bytebuf"><a href="#5-Bytebuf" class="headerlink" title="5.Bytebuf"></a>5.Bytebuf</h2><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="1-粘包与半包"><a href="#1-粘包与半包" class="headerlink" title="1.粘包与半包"></a>1.粘包与半包</h2><h2 id="2-协议设计与解析"><a href="#2-协议设计与解析" class="headerlink" title="2.协议设计与解析"></a>2.协议设计与解析</h2><h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="1-拓展序列化算法"><a href="#1-拓展序列化算法" class="headerlink" title="1.拓展序列化算法"></a>1.拓展序列化算法</h2><h2 id="2-参数调优"><a href="#2-参数调优" class="headerlink" title="2.参数调优"></a>2.参数调优</h2><h2 id="3-PRC框架"><a href="#3-PRC框架" class="headerlink" title="3.PRC框架"></a>3.PRC框架</h2><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="1-启动流程"><a href="#1-启动流程" class="headerlink" title="1.启动流程"></a>1.启动流程</h2><h2 id="2-NioEventLoop剖析"><a href="#2-NioEventLoop剖析" class="headerlink" title="2.NioEventLoop剖析"></a>2.NioEventLoop剖析</h2><h2 id="3-Accept剖析"><a href="#3-Accept剖析" class="headerlink" title="3.Accept剖析"></a>3.Accept剖析</h2><h2 id="4-Read剖析"><a href="#4-Read剖析" class="headerlink" title="4.Read剖析"></a>4.Read剖析</h2>]]></content>
     
@@ -63,8 +63,8 @@
   
   <entry>
     <title>Zookeeper</title>
-    <link href="/2023/04/09/Zookeeper/"/>
-    <url>/2023/04/09/Zookeeper/</url>
+    <link href="/youzi/2023/04/09/Zookeeper/"/>
+    <url>/youzi/2023/04/09/Zookeeper/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -86,8 +86,8 @@
   
   <entry>
     <title>Redis的应用方案</title>
-    <link href="/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/"/>
-    <url>/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/</url>
+    <link href="/youzi/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/"/>
+    <url>/youzi/2023/04/09/Redis%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E6%A1%88/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -113,8 +113,8 @@
   
   <entry>
     <title>MySQL的分布式方案</title>
-    <link href="/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
-    <url>/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
+    <link href="/youzi/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
+    <url>/youzi/2023/04/09/MySQL%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -142,8 +142,8 @@
   
   <entry>
     <title>cannl</title>
-    <link href="/2023/04/09/cannl/"/>
-    <url>/2023/04/09/cannl/</url>
+    <link href="/youzi/2023/04/09/cannl/"/>
+    <url>/youzi/2023/04/09/cannl/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -171,8 +171,8 @@
   
   <entry>
     <title>线程池</title>
-    <link href="/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    <url>/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
+    <link href="/youzi/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    <url>/youzi/2023/04/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -198,8 +198,8 @@
   
   <entry>
     <title>并发工具</title>
-    <link href="/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
-    <url>/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/</url>
+    <link href="/youzi/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    <url>/youzi/2023/04/09/%E5%B9%B6%E5%8F%91%E5%B7%A5%E5%85%B7/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -227,8 +227,8 @@
   
   <entry>
     <title>JavaIO</title>
-    <link href="/2023/04/09/JavaIO/"/>
-    <url>/2023/04/09/JavaIO/</url>
+    <link href="/youzi/2023/04/09/JavaIO/"/>
+    <url>/youzi/2023/04/09/JavaIO/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -256,8 +256,8 @@
   
   <entry>
     <title>Java容器</title>
-    <link href="/2023/04/09/Java%E5%AE%B9%E5%99%A8/"/>
-    <url>/2023/04/09/Java%E5%AE%B9%E5%99%A8/</url>
+    <link href="/youzi/2023/04/09/Java%E5%AE%B9%E5%99%A8/"/>
+    <url>/youzi/2023/04/09/Java%E5%AE%B9%E5%99%A8/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -283,8 +283,8 @@
   
   <entry>
     <title>JVM调优</title>
-    <link href="/2023/04/09/JVM%E8%B0%83%E4%BC%98/"/>
-    <url>/2023/04/09/JVM%E8%B0%83%E4%BC%98/</url>
+    <link href="/youzi/2023/04/09/JVM%E8%B0%83%E4%BC%98/"/>
+    <url>/youzi/2023/04/09/JVM%E8%B0%83%E4%BC%98/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -310,8 +310,8 @@
   
   <entry>
     <title>Redis的分布式方案</title>
-    <link href="/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
-    <url>/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
+    <link href="/youzi/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/"/>
+    <url>/youzi/2023/04/09/Redis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%B9%E6%A1%88/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -341,8 +341,8 @@
   
   <entry>
     <title>编程思想</title>
-    <link href="/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
-    <url>/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</url>
+    <link href="/youzi/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"/>
+    <url>/youzi/2023/04/09/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -366,8 +366,8 @@
   
   <entry>
     <title>设计模式总结</title>
-    <link href="/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
-    <url>/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
+    <link href="/youzi/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
+    <url>/youzi/2023/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -391,8 +391,8 @@
   
   <entry>
     <title>分布式特性总结</title>
-    <link href="/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/"/>
-    <url>/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</url>
+    <link href="/youzi/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <url>/youzi/2023/04/09/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -418,8 +418,8 @@
   
   <entry>
     <title>Dubbo</title>
-    <link href="/2023/04/09/Dubbo/"/>
-    <url>/2023/04/09/Dubbo/</url>
+    <link href="/youzi/2023/04/09/Dubbo/"/>
+    <url>/youzi/2023/04/09/Dubbo/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -441,8 +441,8 @@
   
   <entry>
     <title>SSM架构总结</title>
-    <link href="/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/"/>
-    <url>/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/</url>
+    <link href="/youzi/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/"/>
+    <url>/youzi/2023/04/09/SSM%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -468,8 +468,8 @@
   
   <entry>
     <title>Java基础</title>
-    <link href="/2023/04/09/Java%E5%9F%BA%E7%A1%80/"/>
-    <url>/2023/04/09/Java%E5%9F%BA%E7%A1%80/</url>
+    <link href="/youzi/2023/04/09/Java%E5%9F%BA%E7%A1%80/"/>
+    <url>/youzi/2023/04/09/Java%E5%9F%BA%E7%A1%80/</url>
     
     <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-Java的优势"><a href="#1-Java的优势" class="headerlink" title="1.Java的优势"></a>1.Java的优势</h2><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1>]]></content>
     
@@ -495,8 +495,8 @@
   
   <entry>
     <title>JVM</title>
-    <link href="/2023/04/09/JVM/"/>
-    <url>/2023/04/09/JVM/</url>
+    <link href="/youzi/2023/04/09/JVM/"/>
+    <url>/youzi/2023/04/09/JVM/</url>
     
     <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-为什么要学习JVM？"><a href="#1-为什么要学习JVM？" class="headerlink" title="1.为什么要学习JVM？"></a>1.为什么要学习JVM？</h2><p>JVM（Java虚拟机）是Java语言的核心组成部分，它是一个虚拟计算机，可以将Java代码编译成字节码并在不同的平台上运行。学习JVM可以给我们带来以下优点：</p><ol><li>理解Java程序的运行机制：学习JVM可以帮助开发人员深入理解Java程序的内部运行机制，包括Java程序的编译、装载、链接、初始化、执行等各个阶段。</li><li>排查和解决Java程序的性能问题：由于JVM是Java程序的执行环境，学习JVM可以帮助开发人员诊断和解决Java程序的性能问题，如内存泄漏、GC性能等。</li><li>编写高效的Java程序：JVM提供了许多高级特性和优化技术，如JIT编译、垃圾回收、线程管理等，学习JVM可以帮助开发人员编写更高效、更可靠的Java程序。</li><li>深入理解Java语言：学习JVM需要涉及到Java语言的许多概念和特性，例如类、对象、继承、多态、异常处理等，这有助于开发人员深入理解Java语言的本质。</li><li>掌握Java虚拟机的调优技巧：学习JVM可以帮助开发人员掌握Java虚拟机的调优技巧，优化Java程序的性能和资源占用情况，提高应用程序的响应速度和稳定性。</li></ol><h1 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h1><h1 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h1><h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1>]]></content>
     
@@ -522,8 +522,8 @@
   
   <entry>
     <title>MySQL优化总结</title>
-    <link href="/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"/>
-    <url>/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/</url>
+    <link href="/youzi/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"/>
+    <url>/youzi/2023/04/09/MySQL%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -549,8 +549,8 @@
   
   <entry>
     <title>Kafka</title>
-    <link href="/2023/04/09/Kafka/"/>
-    <url>/2023/04/09/Kafka/</url>
+    <link href="/youzi/2023/04/09/Kafka/"/>
+    <url>/youzi/2023/04/09/Kafka/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -572,8 +572,8 @@
   
   <entry>
     <title>JUC</title>
-    <link href="/2023/04/09/JUC/"/>
-    <url>/2023/04/09/JUC/</url>
+    <link href="/youzi/2023/04/09/JUC/"/>
+    <url>/youzi/2023/04/09/JUC/</url>
     
     <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="1-为什么要学习并发编程"><a href="#1-为什么要学习并发编程" class="headerlink" title="1.为什么要学习并发编程"></a>1.为什么要学习并发编程</h2><p>Java是一种广泛使用的编程语言，常用于开发大型、分布式、高并发的应用程序。在这样的应用中，多个线程同时执行任务是很常见的情况。因此，学习并发编程可以帮助Java开发人员更好地理解和处理多线程环境下的并发问题，提高程序的性能和可靠性。</p><p>具体来说，以下是Java学习并发编程的一些重要原因：</p><ol><li>提高程序性能：并发编程可以使多个线程同时执行任务，从而提高程序的处理能力和执行效率。</li><li>充分利用多核CPU：现代计算机通常具有多个CPU核心，使用并发编程可以充分利用这些核心，提高程序的并行处理能力。</li><li>避免死锁和竞态条件：多线程环境下，由于资源的共享和竞争，可能会出现死锁和竞态条件等问题。学习并发编程可以帮助开发人员避免这些问题。</li><li>实现更复杂的应用程序：并发编程可以使应用程序支持更复杂的功能，如实时数据处理、多用户交互、分布式计算等</li></ol><h2 id="2-概念解析"><a href="#2-概念解析" class="headerlink" title="2.概念解析"></a>2.概念解析</h2><h1 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h1><h1 id="锁基础"><a href="#锁基础" class="headerlink" title="锁基础"></a>锁基础</h1><h1 id="并发工具"><a href="#并发工具" class="headerlink" title="并发工具"></a>并发工具</h1><h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1>]]></content>
     
@@ -599,8 +599,8 @@
   
   <entry>
     <title>Redis基础</title>
-    <link href="/2023/04/09/Redis/"/>
-    <url>/2023/04/09/Redis/</url>
+    <link href="/youzi/2023/04/09/Redis/"/>
+    <url>/youzi/2023/04/09/Redis/</url>
     
     <content type="html"><![CDATA[]]></content>
     
@@ -622,8 +622,8 @@
   
   <entry>
     <title>MySQL</title>
-    <link href="/2023/04/09/MySQL/"/>
-    <url>/2023/04/09/MySQL/</url>
+    <link href="/youzi/2023/04/09/MySQL/"/>
+    <url>/youzi/2023/04/09/MySQL/</url>
     
     <content type="html"><![CDATA[]]></content>
     

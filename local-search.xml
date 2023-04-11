@@ -121,9 +121,9 @@
     
     <categories>
       
-      <category>数据库</category>
-      
       <category>分布式</category>
+      
+      <category>数据库</category>
       
       <category>MySQL</category>
       
@@ -318,9 +318,9 @@
     
     <categories>
       
-      <category>数据库</category>
-      
       <category>分布式</category>
+      
+      <category>数据库</category>
       
       <category>Redis</category>
       
@@ -609,9 +609,9 @@
       
       <category>数据库</category>
       
-      <category>IO</category>
-      
       <category>Redis</category>
+      
+      <category>IO</category>
       
     </categories>
     

@@ -609,9 +609,9 @@
       
       <category>数据库</category>
       
-      <category>IO</category>
-      
       <category>Redis</category>
+      
+      <category>IO</category>
       
     </categories>
     

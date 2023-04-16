@@ -121,9 +121,9 @@
     
     <categories>
       
-      <category>数据库</category>
-      
       <category>分布式</category>
+      
+      <category>数据库</category>
       
       <category>MySQL</category>
       
@@ -226,11 +226,11 @@
   
   
   <entry>
-    <title>JavaIO</title>
+    <title>IO总结</title>
     <link href="/2076844110/"/>
     <url>/2076844110/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>IO是Input&#x2F;Output的缩写，指的是输入和输出操作。在计算机中，IO通常与外部设备进行交互，包括硬盘、网络、键盘、鼠标、打印机等。计算机通过IO操作来读取外部设备中的数据，或者将计算机中的数据写入到外部设备中。IO操作通常是计算机程序中最耗时的操作之一，因为与计算相比，IO操作需要等待外部设备的响应和数据的传输，这会导致程序的性能瓶颈。为了提高程序的性能，通常采用异步IO、多线程、缓存等技术来优化IO操作。</p><p>IO模型指的是计算机在进行输入输出操作时所采用的方式或者策略，在Unix中， IO 模型一共有 5 种：<strong>同步阻塞 I&#x2F;O</strong>、<strong>同步非阻塞 I&#x2F;O</strong>、<strong>I&#x2F;O 多路复用</strong>、<strong>信号驱动 I&#x2F;O</strong> 和<strong>异步 I&#x2F;O</strong>。</p><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><h3 id="同步与阻塞"><a href="#同步与阻塞" class="headerlink" title="同步与阻塞"></a>同步与阻塞</h3><ul><li><strong>同步（Synchronous）</strong>：同步指的是程序进行输入输出操作时，需要等待操作完成并返回结果后才能继续进行其他操作。即线程自己去获取结果（<code>一个线程</code>）。</li><li><strong>异步（Asynchronous）</strong>：异步指的是程序进行输入输出操作时，不需要等待操作完成并返回结果就能继续进行其他操作。线程自己不去获取结果，而是由其它线程返回结果（<code>至少两个线程</code>）。</li><li><strong>阻塞（Blocking）</strong>：阻塞指的是程序进行输入输出操作时，需要等待操作完成并返回结果后才能继续进行其他操作。</li><li><strong>非阻塞（No-Blocking）</strong>:非阻塞指的是程序进行输入输出操作时，不需要等待操作完成并返回结果就能继续进行其他操作。</li></ul><h3 id="内核态与用户态"><a href="#内核态与用户态" class="headerlink" title="内核态与用户态"></a>内核态与用户态</h3><ul><li>内核态：内核态是操作系统运行的一种特权级别，也称为特权模式。在内核态下，<strong>操作系统拥有对计算机硬件的完全控制权</strong>，可以执行所有指令，访问所有的内存地址和硬件资源，包括对CPU、内存、I&#x2F;O设备等的控制和管理。内核态下的程序可以执行特权指令，访问受保护的资源，并且可以直接调用系统调用接口，进行操作系统相关的功能调用。</li><li>用户态：用户态是操作系统运行的另一种特权级别，也称为非特权模式。在用户态下，<strong>程序只能访问受操作系统所限制的资源</strong>，不能直接访问受保护的硬件资源，包括CPU、内存、I&#x2F;O设备等。用户态下的程序不能执行特权指令，也不能直接调用系统调用接口，只能通过操作系统提供的API进行操作系统相关的功能调用。</li></ul><p>在操作系统中，用户态和内核态之间的切换是通过系统调用（syscalls）、中断（interrupts）、异常（exceptions）等机制实现的。当程序需要访问受保护的资源或进行操作系统相关的功能调用时，就需要从用户态切换到内核态，这需要通过硬件的支持来实现。在内核态下完成相关操作后，程序会再次切换到用户态，继续执行自己的任务。</p><h3 id="IO调用之后"><a href="#IO调用之后" class="headerlink" title="IO调用之后"></a>IO调用之后</h3><p>当应用程序发起 I&#x2F;O 调用后，会由用户态切换至操作系统内核态来完成真正数据读取，而读取又分为两个阶段，分别为：</p><ul><li>等待数据阶段</li><li>复制数据阶段</li></ul><p><img src="https://s2.loli.net/2023/04/16/bXzcVErkg5MSWvN.png"></p><h2 id="IO模型-1"><a href="#IO模型-1" class="headerlink" title="IO模型"></a>IO模型</h2><h3 id="同步阻塞IO"><a href="#同步阻塞IO" class="headerlink" title="同步阻塞IO"></a>同步阻塞IO</h3><p><img src="https://s2.loli.net/2023/04/16/MfEY5pNle6PdKHB.png"></p><p>同步阻塞 IO 模型中，应用程序发起 read 调用后，会一直阻塞，直到内核把数据拷贝到用户空间。</p><h3 id="同步非阻塞IO"><a href="#同步非阻塞IO" class="headerlink" title="同步非阻塞IO"></a>同步非阻塞IO</h3><p><img src="https://s2.loli.net/2023/04/16/5fiGv4RmAbkO1Mn.png"></p><ul><li><p>用户线程在一个循环中一直调用read方法，若内核空间中还没有数据可读，立即返回。</p><p><code>只是在等待阶段非阻塞</code></p></li><li><p>用户线程发现内核空间中有数据后，等待内核空间执行复制数据，待复制结束后返回结果</p></li></ul><p>相比于同步阻塞 IO 模型，同步非阻塞 IO 模型确实有了很大改进。通过轮询操作，避免了一直阻塞。但是，这种 IO 模型同样存在问题：<strong>应用程序不断进行 I&#x2F;O 系统调用轮询数据是否已经准备好的过程是十分消耗 CPU 资源的。</strong></p><p>通过<a href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8">IO多路</a>复用来解决这个问题</p><h3 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h3><p><img src="https://s2.loli.net/2023/04/16/iHqEcaOjJFYMRIm.png"></p><ul><li>线程1调用方法后理解返回，<strong>不会被阻塞也不需要立即获取结果</strong></li><li>当方法的运行结果出来以后，由线程2将结果返回给线程1</li></ul><h1 id="IO模型的实现"><a href="#IO模型的实现" class="headerlink" title="IO模型的实现"></a>IO模型的实现</h1><h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO 多路复用模型中，线程首先发起 select 调用，询问内核数据是否准备就绪，等内核把数据准备好了，用户线程再发起 read 调用。read 调用的过程（数据从内核空间 -&gt; 用户空间）还是阻塞的。</p>]]></content>
     
     
     <categories>
@@ -316,9 +316,9 @@
     
     <categories>
       
-      <category>数据库</category>
-      
       <category>分布式</category>
+      
+      <category>数据库</category>
       
       <category>Redis</category>
       
